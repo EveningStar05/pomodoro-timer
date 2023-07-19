@@ -11,22 +11,36 @@
 // 3. For every end of main timer, count cycle as 1.
 // 4. repeat the process. 
 
-
-function setTime(val) { 
+function setTime(val) {
     let time = val * 60;
-    return time;
+    return time
 }
 
-let initPomo = setTime(25);
-let initBreak = setTime(10);
-let timer_status = "pomo"
+let initPomo = setTime(1);
 
-setInterval(function() {
-    let minutes = Math.floor(initPomo/60);
-    let seconds = initPomo % 60;
-
+function setTimer(val) {
+    // const timer_label = document.querySelector("p.timer-label"); 
+    let minutes = Math.floor(val/60);
+    let seconds = val % 60;
     initPomo--
+    
+    if (seconds < 10 || seconds === 0) {
+        seconds = "0" + seconds;
+    } else if (minutes < 10 || minutes === 0) {
+        minutes = "0" + minutes
+    }
+    
+    if (seconds === 0) {
+        minutes -= 1;
+    }
+    
+    if (minutes === "00" && seconds === "00") {
+        return;
+    }
+}
 
-    console.log(minutes. seconds)
-}, 1000);
+const start = () => {
+    setTimer(initPomo)
+}
 
+setInterval(start, 1000);
