@@ -1,0 +1,52 @@
+:root {
+    --peach-colour: #F9E0AE;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+/* Colour palette: https://colorhunt.co/palette/f9e0aefc8621c24914682c0e */
+@media only screen and (min-width: 1920px) {
+    .outer-circle {
+        width: 600px;
+        height: 600px;
+    }
+
+    .inner-circle {
+        width: 550px;
+        height: 550px;
+    }
+}
+
+body {
+    background-color: var(--peach-colour);
+}
+
+.outer-circle {
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    background-color: #FC8621;
+    margin: 50px auto;
+}
+
+.inner-circle {
+    width: 350px;
+    height: 350px;
+    background-color: var(--peach-colour);
+    border-radius: inherit;
+    position: relative;
+    top: 25px;
+    left: 25px;
+}
+
+.timer-label {
+    text-align: center;
+    position: inherit;
+    font-size: 72px;
+    top: 120px;
+    color: #C24914;
+    font-family: Quicksand ;
+}
