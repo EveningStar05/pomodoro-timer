@@ -12,16 +12,13 @@
 // 4. Every time the cycle ends (when timer hits 0) it will set to the next cycle.
 
 const timer_label = document.querySelector("#timer-label");
+let session = "pomo";
 
-const setTime = (val) => {
-    let time = val * 60;
-    return time
-}
+const setTime = (val) => val * 60;
 
 function setTimer(val) {
     let minutes = Math.floor(val/60);
     let seconds = val % 60;
-    initPomo--;
 
     if (minutes < 10) {
         minutes = "0" + minutes;
@@ -38,22 +35,27 @@ function setTimer(val) {
     }
     
     if (val < 0) {
-        clearInterval(timeInterval); // stop the timer
-        return true; // timer completed
+        // clearInterval(timeInterval); // stop the timer
+        return true;
     }
 
-    timer_label.textContent = `${minutes}:${seconds}`
+    timer_label.textContent = `${minutes}:${seconds}`;
 }
 
-let initPomo = setTime(25);
+let initPomo = setTime(1);
 let initBreak = setTime(10);
 
 export const start = () => {
-    setInterval(() => {
-        setTimer(initPomo);
-    }, 1000);
-    // let setPomodoro = setTimer(initPomo);
-    // let setBreak = setTimer(initBreak);
-
-    // TODO: Switching sessions each completed one. 
+    switch (session) {
+        case "pomo":
+            let setPomo = setTimer(initPomo--);
+            if (setPomo) session = "break";
+            break;
+        case "break":
+            setTimer(initBreak--);
+        default:
+            break;
+    }
 }
+
+// export let timeInterval = setInterval(start, 1000); 
