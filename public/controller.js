@@ -1,20 +1,30 @@
-import {start} from "./timer.js"
+import {
+    start,
+    setTimeLabel
+} from "./timer.js"
 
 let inner_circle = document.querySelector("div.inner-circle");
-
-let start_btn = document.querySelector("button#pause-or-play-btn");
+let buttons = document.querySelectorAll("button");
 let btn_stats = false;
 let timerInterval;
 
-start_btn.addEventListener("click", () => {
-    btn_stats = !btn_stats;
+setTimeLabel()
 
-    if (btn_stats) { // start
-        timerInterval = setInterval(() => {
-            start();
-        }, 1000);
+for (let i = 0; i < buttons.length; i++) {
 
-    } else { // pause
-        clearInterval(timerInterval)
-    }
-})
+    buttons[i].addEventListener("click", (Event) => {
+
+        if (Event.target.id === "pause-or-play-btn") {
+
+            btn_stats = !btn_stats;
+
+            if (btn_stats) { // start
+                timerInterval = setInterval(() => {
+                    start();
+                }, 1000);
+            } else { // pause
+                clearInterval(timerInterval)
+            }
+        }
+    })
+}
