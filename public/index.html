@@ -10,7 +10,13 @@
 <body>
     <div class="outer-circle">
         <div class="inner-circle">
-            <p class="timer-label"></p>
+            <p id="timer-label" class="timer-label-style">25:00</p>
+            <p id="session-label" class="timer-label-style">Start!</p>
+        </div>
+
+        <div class="btn-container">
+            <button id="pause-or-play-btn" class="btn-style">Start</button>
+            <button id="pause-or-play-btn" class="btn-style">Stop</button>
         </div>
     </div>
     <script type="module" src="./controller.js"></script>
