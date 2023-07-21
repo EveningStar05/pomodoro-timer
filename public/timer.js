@@ -1,27 +1,14 @@
-
-// Note: KEEPING IT SMALL. TIME LIMIT 2 DAYS.
-
-// Requirements:
-// 1. Only use Vanilla HTML, CSS and Javascript (DOM Manipulation)
-// 2. You can see some tutorials just to inspire you, but don't follow it. Try doing it by yourself.
-
-// pseudocode:
-// 1. set init value to be 25.
-// 2. set break value to be 10.
-// 3. There are: pause, play and stop button to interact
-// 4. Every time the cycle ends (when timer hits 0) it will set to the next cycle.
-
 const timer_label = document.querySelector("#timer-label");
 const status_label = document.querySelector("p#session-label")
-let session = "pomo";
-
-export let timerRunning = false;
 
 const setTime = (val) => val * 60;
+let session = "work";
+
+export let timerCompleted = false;
 
 export const setTimeLabel = () => {
     switch (session) {
-        case "pomo":
+        case "work":
             timer_label.textContent = `25:00`;
             status_label.textContent = "Start!"
             break;
@@ -35,23 +22,33 @@ export const setTimeLabel = () => {
 
 export let timerInterval;
 
+let initwork = setTime(25);
+let initBreak = setTime(10);
+
+export let reset = () => { // resets the timer back to 25.
+    session = "work";
+    setTimeLabel()
+    initwork = setTime(25);
+}
+
 export const start = () => {
-
-    let initPomo = setTime(1);
-    let initBreak = setTime(10);
-
     timerInterval = setInterval(function() {
-        timerRunning = true;
-        if (session === "pomo") {
-            setTimer(initPomo--);
-        } else {
-            setTimer(initBreak--);
+        timerCompleted = false;
+        switch (session) {
+            case "work":
+                setTimer(initwork--);
+                break;
+            case "break":
+                setTimer(initBreak--);
+                break;
+            default:
+                break;
         }
     }, 1000)
 }
 
 const  setTimer = (val) => {
-    
+
     let minutes = Math.floor(val/60);
     let seconds = val % 60;
 
@@ -72,12 +69,12 @@ const  setTimer = (val) => {
     timer_label.textContent = `${minutes}:${seconds}`;
     
     if (val <= 0) {
+        timerCompleted = true;
         clearInterval(timerInterval);
-        if (session === "pomo") {
+
+        if (session === "work") {
             session = "break";
         }
-
-        timerRunning = false;
         setTimeLabel()
     }
 }
