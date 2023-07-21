@@ -12,7 +12,10 @@
 // 4. Every time the cycle ends (when timer hits 0) it will set to the next cycle.
 
 const timer_label = document.querySelector("#timer-label");
+const status_label = document.querySelector("p#session-label")
 let session = "pomo";
+
+export let timerRunning = false;
 
 const setTime = (val) => val * 60;
 
@@ -20,12 +23,31 @@ export const setTimeLabel = () => {
     switch (session) {
         case "pomo":
             timer_label.textContent = `25:00`;
+            status_label.textContent = "Start!"
             break;
         case "break":
             timer_label.textContent = `10:00`;
+            status_label.textContent = "Break time!"
         default:
             break;
     }
+}
+
+export let timerInterval;
+
+export const start = () => {
+
+    let initPomo = setTime(1);
+    let initBreak = setTime(10);
+
+    timerInterval = setInterval(function() {
+        timerRunning = true;
+        if (session === "pomo") {
+            setTimer(initPomo--);
+        } else {
+            setTimer(initBreak--);
+        }
+    }, 1000)
 }
 
 const  setTimer = (val) => {
@@ -46,25 +68,16 @@ const  setTimer = (val) => {
     if (seconds === 0) {
         minutes -= 1;
     }
-    
-    if (val < 0) {
-        return true; 
-        // wait for a button click to start the next session.
-        // I think I should create a seperate logic for setting up the time label and start the timer.
-        // everytime a session ends, the timer label will be updated to the next session
-        // wait for an event then start the next session.
-    }
 
     timer_label.textContent = `${minutes}:${seconds}`;
-}
+    
+    if (val <= 0) {
+        clearInterval(timerInterval);
+        if (session === "pomo") {
+            session = "break";
+        }
 
-let initPomo = setTime(1);
-let initBreak = setTime(10);
-
-export const start = () => {
-    let setPomo = setTimer(initPomo--);
-    if (setPomo) {
-        session = "break";
+        timerRunning = false;
         setTimeLabel()
     }
 }
