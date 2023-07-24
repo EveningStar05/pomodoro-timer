@@ -80,6 +80,6 @@ body {
     color: var(--peach-colour);
 }
 
-.btn-style:hover {
+.btn-style:disabled, .btn-style:hover {
     background-color: var(--dark-yellow);
 }

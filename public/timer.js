@@ -1,53 +1,49 @@
+import { reset_button } from "./controller.js";
+
 const timer_label = document.querySelector("#timer-label");
 const status_label = document.querySelector("p#session-label")
 
 const setTime = (val) => val * 60;
 let session = "work";
 
-export let timerCompleted = false;
-
 export const setTimeLabel = () => {
     switch (session) {
         case "work":
             timer_label.textContent = `25:00`;
-            status_label.textContent = "Start!"
+            status_label.textContent = "Start!"; 
             break;
         case "break":
             timer_label.textContent = `10:00`;
-            status_label.textContent = "Break time!"
+            status_label.textContent = "Break time!"; 
         default:
             break;
     }
 }
 
 export let timerInterval;
+export let timerCompleted = false;
 
-let initwork = setTime(25);
-let initBreak = setTime(10);
+let initWork = setTime(25);
 
 export let reset = () => { // resets the timer back to 25.
     session = "work";
-    setTimeLabel()
-    initwork = setTime(25);
+    setTimeLabel();
+    initWork = setTime(25);
 }
 
-export const start = () => {
+const startSetInterval = () => {
+    clearInterval(timerInterval);
     timerInterval = setInterval(function() {
-        timerCompleted = false;
-        switch (session) {
-            case "work":
-                setTimer(initwork--);
-                break;
-            case "break":
-                setTimer(initBreak--);
-                break;
-            default:
-                break;
-        }
+        setTimer(initWork--);
     }, 1000)
 }
 
-const  setTimer = (val) => {
+export const start = () => {
+    timerCompleted = false;
+    startSetInterval();
+}
+
+const setTimer = (val) => {
 
     let minutes = Math.floor(val/60);
     let seconds = val % 60;
@@ -70,11 +66,17 @@ const  setTimer = (val) => {
     
     if (val <= 0) {
         timerCompleted = true;
-        clearInterval(timerInterval);
-
         if (session === "work") {
             session = "break";
+            initWork = setTime(10);
+
+        } else {
+            session = "work";
+            initWork = setTime(25);
         }
-        setTimeLabel()
+
+        clearInterval(timerInterval); 
+        reset_button();
+        setTimeLabel();
     }
 }
