@@ -1,5 +1,8 @@
 import { reset_button } from "./controller.js";
 
+const magical_bell = new Audio("./audio/mixkit-bike-magical-bell-591.wav");
+const fairy_bell = new Audio("./audio/mixkit-fairy-bells-583.wav");
+
 const timer_label = document.querySelector("#timer-label");
 const status_label = document.querySelector("p#session-label")
 
@@ -31,20 +34,16 @@ export let reset = () => { // resets the timer back to 25.
     initWork = setTime(25);
 }
 
-const startSetInterval = () => {
+export const start = () => {
+    timerCompleted = false;
     clearInterval(timerInterval);
-    timerInterval = setInterval(function() {
+    timerInterval = setInterval(function startPomodoroTimer() {
         setTimer(initWork--);
+        return startPomodoroTimer;
     }, 1000)
 }
 
-export const start = () => {
-    timerCompleted = false;
-    startSetInterval();
-}
-
 const setTimer = (val) => {
-
     let minutes = Math.floor(val/60);
     let seconds = val % 60;
 
@@ -69,10 +68,12 @@ const setTimer = (val) => {
         if (session === "work") {
             session = "break";
             initWork = setTime(10);
+            fairy_bell.play()
 
         } else {
             session = "work";
             initWork = setTime(25);
+            magical_bell.play()
         }
 
         clearInterval(timerInterval); 
