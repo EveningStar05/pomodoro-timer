@@ -1,7 +1,0 @@
-Create a simple pomodoro app that has its basic funcitonality and a simple interface.
-1. A pomodoro timer that has an initial value at 25 mins.
-2. stop and start timer at default value time. (25 mins and 10 mins)
-3. A simple responsive design using HTML, CSS and Javascript. (animation also)
-4. I think animation and timer should be a seperate file.
-
-I think this is a good way to refresh your memory with HTMLDOM.
