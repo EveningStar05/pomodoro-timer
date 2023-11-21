@@ -9,6 +9,8 @@ const status_label = document.querySelector("p#session-label")
 const setTime = (val) => val * 60;
 let session = "work";
 
+// Todo: make the setinterval to start immediately.
+
 export const setTimeLabel = () => {
     switch (session) {
         case "work":
@@ -36,7 +38,7 @@ export let reset = () => { // resets the timer back to 25.
 
 export const start = () => {
     timerCompleted = false;
-    clearInterval(timerInterval);
+    // clearInterval(timerInterval);
     timerInterval = setInterval(function startPomodoroTimer() {
         setTimer(initWork--);
         return startPomodoroTimer;
